@@ -100,13 +100,13 @@ def main():
     # extract the training tokens as word embeddings, and also extract the training labels
     training_features, training_labels = extract_embeddings_as_features_and_gold(trainingfile, language_model)
     
-    # encode the training labels into numeric values
+    # encode the training labels into numeric values (we skip the first one since that is the header)
     encoded_training_labels = encode_labels(training_labels[1:])
 
     # extract the test tokens as word embeddings, also extract matching labels
     test_features, test_labels = extract_embeddings_as_features_and_gold(testfile, language_model)
 
-    # encode the test labels into numeric values
+    # encode the test labels into numeric values (we skip the first one since that is the header)
     encoded_test_labels = encode_labels(test_labels[1:])
     
     ### GET HYPERPARAMETER VALUES AND INITIALIZE THE NETWORK ###
