@@ -111,9 +111,9 @@ def main():
     
     ### GET HYPERPARAMETER VALUES AND INITIALIZE THE NETWORK ###
     
-    hidden_nodes_list = [50, 100, 150, 200] # values between 300 and 5, so that the network will summarize key features
-    learning_rate_list = [0.01, 0.1, 0.2, 0.3]
-    epochs_list = [3, 6, 9, 12, 15]
+    hidden_nodes_list = [50, 100, 150] # values between 300 and 5, so that the network will summarize key features
+    learning_rate_list = [0.1, 0.2, 0.3]
+    epochs_list = [5, 10, 15]
     hyperparameter_combos = get_hyperparameter_combos(hidden_nodes_list, learning_rate_list, epochs_list)
     
     # try out all possible combinations of hyperparameters
