@@ -21,6 +21,6 @@ HOW TO RUN THE CODE FROM THE COMMAND LINE (assuming that we are in the directory
 
 python ner.experiment.py preprocessed_data/reuters-train-tab-stripped-preprocessed_with_features.en preprocessed_data/gold_stripped-preprocessed_with_features.conll GoogleNews-vectors-negative300.bin.gz
 
---> first argument = training data file, second argument = test data file, third argument = language model
---> when performing 10-fold cross validation, use "ner_dataset/batches/all_but_batch{n}.txt" as the training data and "ner_dataset/batches/batch{n}.txt" as the test data.
---> the script gives the performance of the network, resulting from different hyperparameter combinations, as output.
+- First argument = training data file, second argument = test data file, third argument = language model
+- When performing 10-fold cross validation, use "ner_dataset/batches/all_but_batch{n}.txt" as the training data and "ner_dataset/batches/batch{n}.txt" as the test data.
+- The script gives the performance of the network, resulting from different hyperparameter combinations, as output.
