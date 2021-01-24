@@ -12,10 +12,10 @@ README: Description of code for NER experiment
 ### "Preprocessed_data" also contains a subdirectory "batches":
 - The files in this directory are batches of the training data set, which can be used for 10-fold cross validation.
 
-### The following language model should be placed in this same directory "digit_experiment":
+### The following language model should be placed in the main directory "ner_experiment":
 - GoogleNews-vectors-negative300.bin.gz
 
-HOW TO RUN THE CODE FROM THE COMMAND LINE (assuming that we are in the directory "digit_experiment"):
+HOW TO RUN THE CODE FROM THE COMMAND LINE (assuming that we are in the directory "ner_experiment"):
 
 1) Train and test the neural network by typing the following command:
 
