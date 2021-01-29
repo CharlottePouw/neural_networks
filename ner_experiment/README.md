@@ -32,4 +32,5 @@ python ner.experiment.py preprocessed_data/batches/all_but_batch{n}.txt preproce
 python ner.experiment.py preprocessed_data/reuters-train-tab-stripped-preprocessed_with_features.en preprocessed_data/gold_stripped-preprocessed_with_features.conll GoogleNews-vectors-negative300.bin.gz
 
 - First argument = training data file, second argument = test data file, third argument = language model
-- The script gives an evaluation table and a confusion matrix as output.
+- The script gives the network's overall performance (accuracy), an evaluation table, and a confusion matrix as output.
+- It also creates an outputfile called "results.csv", which ends up in the main directory "ner_experiment". This file contains the tokens in combination with the gold labels and the network's predicted labels, which can be used for an error analysis.
