@@ -93,7 +93,33 @@ def decode_labels(labels, encoded_labels):
 
     return decoded_labels
         
-
+def write_out(testfile, outputfile, correct_labels, predicted_labels):
+    '''
+    Function to write both the correct labels and the predicted labels of the tokens in a testfile to an outputfile
+    
+    :param testfile: path to testfile containing tokens
+    :param outputfile: path to outputfile
+    :param correct_labels: list of correct/gold labels
+    :param predicted_labels: list of network's predicted labels
+    
+    :type testfile: string
+    :type outputfile: string
+    :type correct_labels: list
+    :type predicted_labels: list
+    '''
+    
+    # Read in conll file and extract the tokens
+    conll_input = pd.read_csv(testfile, sep='\t')
+    tokens = conll_input['token'].tolist()
+    
+    # Create dataframe with tokens, gold labels and predicted labels
+    df = pd.DataFrame(list(zip(tokens, correct_labels, predicted_labels)), 
+               columns =['token', 'correct_label', 'predicted_label'])
+    
+    # Write dataframe to outputfile
+    df.to_csv(outputfile, index=False)
+    
+    
 def main():
     
     argv = sys.argv
@@ -153,12 +179,12 @@ def main():
             n.train(inputs, targets)
 
     ### TEST THE NEURAL NETWORK ###
-        
-    # needed for confusion matrix
-    evaluation_counts = defaultdict(Counter)
     
-    # to keep score of the network's predicted labels
+    # this list will contain the network's predicted labels
     networks_labels = []
+    
+    # scorecard for how well the network performs, initially empty
+    scorecard = []
     
     # iterate over all the test instances and corresponding test labels
     for embedding, correct_label in zip(test_features[1:], encoded_test_labels):
@@ -172,10 +198,22 @@ def main():
         # the index of the highest value in the 'outputs' array corresponds to the network's predicted label
         networks_label = numpy.argmax(outputs)
         
+        # append correct or incorrect to list
+        if (networks_label == correct_label):
+            # network's answer matches correct answer, add 1 to scorecard
+            scorecard.append(1)
+        else:
+            # network's answer doesn't match correct answer, add 0 to scorecard
+            scorecard.append(0)
+        
         # add network's prediction to list
         networks_labels.append(networks_label)
 
     ### EVALUATE NEURAL NETWORK ###
+    
+    # calculate the performance score, the fraction of correct answers
+    scorecard_array = numpy.asarray(scorecard)
+    print('performance =', scorecard_array.sum() / scorecard_array.size)
     
     # decode network's predicted labels
     decoded_labels = decode_labels(test_labels[1:], networks_labels)
@@ -185,6 +223,9 @@ def main():
     evaluations = calculate_precision_recall_fscore(evaluation_counts)
     provide_output_tables(evaluations)
     provide_confusion_matrix(evaluation_counts)
+    
+    # write correct and predicted labels to a file in combination with the tokens, needed for error analysis
+    write_out(testfile, 'results.csv', test_labels[1:], decoded_labels)
 
 if __name__ == '__main__':
     main()
